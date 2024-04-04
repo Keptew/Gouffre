@@ -75,6 +75,66 @@ public class Players {
             }
         }
     }
+    public boolean isJoueursGuerre(){
+        boolean isGuerre = false;
+        for (Player p : this.playerList){
+            if (p.isGuerre()){
+                isGuerre = true;
+            }
+        }
+        return isGuerre;
+    }
+
+    public void finGuerre(){
+        System.out.println("Fin de la guerre !");
+        for (Player p : this.playerList){
+            if(p.isGuerre()){
+                p.setGuerre(false);
+                p.setPosition(45);
+            }
+        }
+    }
+    public void boireGuerre(){
+        for (Player p : this.playerList){
+            if (p.isGuerre()){
+                p.ajoutGorgee(1);
+            }
+        }
+    }
+
+    public boolean ak47(Player victime){
+        boolean isShot = false;
+        HashMap<Player, Integer> resultatTir = new HashMap<>();
+        for (Player j : this.playerList){
+            if (j != victime){
+                resultatTir.put(j, j.choixDe());
+            }
+        }
+        Integer resultatVictime = victime.lancerDe();
+        for (Map.Entry m : resultatTir.entrySet()){
+            if (m.getValue() == resultatVictime){
+                Player temp = (Player) m.getKey();
+                temp.mortJoueur();
+                isShot = true;
+            }
+        }
+        return isShot;
+    }
+
+    public Player magnum357(){
+        Player pReturn = null;
+        boolean isDead = false;
+        for (int i = 0;!isDead && i < this.playerList.size(); i++ ){
+            Player j = this.playerList.get(i);
+            int result = j.lancerDe();
+            if (result == 1){
+                isDead = true;
+                pReturn = j;
+            }
+        }
+        return pReturn;
+    }
+
     public Player vieChat(List<Player> playerList1) {
         Player pReturn = null;
         int nbrJoueurs = playerList1.size();
@@ -173,26 +233,6 @@ public class Players {
         }
         return pReturn;
     }
-    public Player choixJoueur(){
-        Player pReturn = null;
-        int isAnswer = 0;
-        while(isAnswer == 0) {
-            Scanner s = new Scanner(System.in);
-            System.out.println("Quel Joueur choisis-tu ?");
-            int i = 1;
-            for (Player p : this.playerList){
-                System.out.println(STR."\{i} - \{p.getName()}");
-                i++;
-            }
-            int choix = s.nextInt()-1;
-            if(choix<this.playerList.size()){
-                System.out.println(STR."Tu as choisi \{this.playerList.get(choix).getName()}");
-                isAnswer++;
-                pReturn = this.playerList.get(choix);
-            }
-        }
-        return pReturn;
-    }
     public Player choixSpecificPlayer(Player player1){
         Player pReturn = null;
         int isAnswer = 0;
@@ -265,5 +305,4 @@ public class Players {
         }
         return pWinner;
     }
-
 }

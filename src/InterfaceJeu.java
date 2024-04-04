@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Scanner;
+
 public class InterfaceJeu {
     private String sensPlateau;
 
@@ -39,7 +40,7 @@ public class InterfaceJeu {
         System.out.println("Choisissez le nombre de joueurs :");
         int nbrJ = scanner.nextInt();
         for (int i = 1; i < nbrJ + 1; i++) {
-            System.out.println(STR."Choisissez un nom pour le joueur \{i}");
+            System.out.println(StringTemplate.STR."Choisissez un nom pour le joueur \{i}");
             scanner.nextLine();
             String newName = scanner.nextLine();
             System.out.println("Choisissez un multiplicateur pour ce joueur");
@@ -50,7 +51,6 @@ public class InterfaceJeu {
         System.out.println(players.listeJoueurs());
         return players;
     }
-
     public void Parcours(Players joueurs, int playerStart) {
         Scanner scanner = new Scanner(System.in);
         if(sensPlateau.equals("horaire")) {
@@ -60,13 +60,13 @@ public class InterfaceJeu {
                 int multiplicateur = joueur.getMultiplicateur();
                 int nbrSecs = joueur.getNbrSec();
                 int nbrJoker = joueur.getNbrJoker();
-                System.out.println(STR."Au tour de \{joueur.getName()} !");
-                System.out.println(STR."Tu es actuellement sur la case \{joueur.getPosition()}");
+                System.out.println(StringTemplate.STR."Au tour de \{joueur.getName()} !");
+                System.out.println(StringTemplate.STR."Tu es actuellement sur la case \{joueur.getPosition()}");
                 System.out.println("Voici tes statistiques pour le moment : ");
-                System.out.println(STR."Nombre de gorgée : \{nbrGorgee}");
-                System.out.println(STR."Nombre de secs : \{nbrSecs}");
-                System.out.println(STR."Multiplicateur : \{multiplicateur}");
-                System.out.println(STR."Nombre de joker : \{nbrJoker}");
+                System.out.println(StringTemplate.STR."Nombre de gorgée : \{nbrGorgee}");
+                System.out.println(StringTemplate.STR."Nombre de secs : \{nbrSecs}");
+                System.out.println(StringTemplate.STR."Multiplicateur : \{multiplicateur}");
+                System.out.println(StringTemplate.STR."Nombre de joker : \{nbrJoker}");
                 if (joueur.getNbrTour() < 1) {
                     Jouer(joueur, joueurs);
                 } else {
@@ -83,17 +83,17 @@ public class InterfaceJeu {
                     int multiplicateur = joueur.getMultiplicateur();
                     int nbrSecs = joueur.getNbrSec();
                     int nbrJoker = joueur.getNbrJoker();
-                    System.out.println(STR."Au tour de \{joueur.getName()} !");
-                    System.out.println(STR."Tu es actuellement sur la case \{joueur.getPosition()}");
+                    System.out.println(StringTemplate.STR."Au tour de \{joueur.getName()} !");
+                    System.out.println(StringTemplate.STR."Tu es actuellement sur la case \{joueur.getPosition()}");
                     System.out.println("Voici tes statistiques pour le moment : ");
-                    System.out.println(STR."Nombre de gorgée : \{nbrGorgee}");
-                    System.out.println(STR."Nombre de secs : \{nbrSecs}");
-                    System.out.println(STR."Multiplicateur : \{multiplicateur}");
-                    System.out.println(STR."Nombre de joker : \{nbrJoker}");
+                    System.out.println(StringTemplate.STR."Nombre de gorgée : \{nbrGorgee}");
+                    System.out.println(StringTemplate.STR."Nombre de secs : \{nbrSecs}");
+                    System.out.println(StringTemplate.STR."Multiplicateur : \{multiplicateur}");
+                    System.out.println(StringTemplate.STR."Nombre de joker : \{nbrJoker}");
                     if (joueur.getNbrTour() < 1) {
                         Jouer(joueur, joueurs);
                         if (joueurs.checkWin()){
-                            System.out.println(STR."Féliciations à \{joueurs.winner().getName()} pour la victoire !");
+                            System.out.println(StringTemplate.STR."Féliciations à \{joueurs.winner().getName()} pour la victoire !");
                             System.out.println("Appuyez sur entrée pour retourner au menu");
                             scanner.nextLine();
                             MenuJeu();
@@ -114,17 +114,17 @@ public class InterfaceJeu {
                 int multiplicateur = joueur.getMultiplicateur();
                 int nbrSecs = joueur.getNbrSec();
                 int nbrJoker = joueur.getNbrJoker();
-                System.out.println(STR."Au tour de \{joueur.getName()} !");
-                System.out.println(STR."Tu es actuellement sur la case \{joueur.getPosition()}");
+                System.out.println(StringTemplate.STR."Au tour de \{joueur.getName()} !");
+                System.out.println(StringTemplate.STR."Tu es actuellement sur la case \{joueur.getPosition()}");
                 System.out.println("Voici tes statistiques pour le moment : ");
-                System.out.println(STR."Nombre de gorgée : \{nbrGorgee}");
-                System.out.println(STR."Nombre de secs : \{nbrSecs}");
-                System.out.println(STR."Multiplicateur : \{multiplicateur}");
-                System.out.println(STR."Nombre de joker : \{nbrJoker}");
+                System.out.println(StringTemplate.STR."Nombre de gorgée : \{nbrGorgee}");
+                System.out.println(StringTemplate.STR."Nombre de secs : \{nbrSecs}");
+                System.out.println(StringTemplate.STR."Multiplicateur : \{multiplicateur}");
+                System.out.println(StringTemplate.STR."Nombre de joker : \{nbrJoker}");
                 if (joueur.getNbrTour() < 1) {
                     Jouer(joueur, joueurs);
                     if (joueurs.checkWin()){
-                        System.out.println(STR."Féliciations à \{joueurs.winner().getName()} pour la victoire !");
+                        System.out.println(StringTemplate.STR."Féliciations à \{joueurs.winner().getName()} pour la victoire !");
                         System.out.println("Appuyez sur entrée pour retourner au menu");
                         scanner.nextLine();
                         MenuJeu();
@@ -143,22 +143,25 @@ public class InterfaceJeu {
                     int multiplicateur = joueur.getMultiplicateur();
                     int nbrSecs = joueur.getNbrSec();
                     int nbrJoker = joueur.getNbrJoker();
-                    System.out.println(STR."Au tour de \{joueur.getName()} !");
-                    System.out.println(STR."Tu es actuellement sur la case \{joueur.getPosition()}");
+                    System.out.println(StringTemplate.STR."Au tour de \{joueur.getName()} !");
+                    System.out.println(StringTemplate.STR."Tu es actuellement sur la case \{joueur.getPosition()}");
                     System.out.println("Voici tes statistiques pour le moment : ");
-                    System.out.println(STR."Nombre de gorgée : \{nbrGorgee}");
-                    System.out.println(STR."Nombre de secs : \{nbrSecs}");
-                    System.out.println(STR."Multiplicateur : \{multiplicateur}");
-                    System.out.println(STR."Nombre de joker : \{nbrJoker}");
-                    if (joueur.getNbrTour() < 1) {
+                    System.out.println(StringTemplate.STR."Nombre de gorgée : \{nbrGorgee}");
+                    System.out.println(StringTemplate.STR."Nombre de secs : \{nbrSecs}");
+                    System.out.println(StringTemplate.STR."Multiplicateur : \{multiplicateur}");
+                    System.out.println(StringTemplate.STR."Nombre de joker : \{nbrJoker}");
+                    if (joueur.isGuerre()){
+                        System.out.println("Vous passez votre tour !");
+                        System.out.println("\n");
+                    }else if (joueur.getNbrTour() < 1) {
                         Jouer(joueur, joueurs);
-                        if (joueurs.checkWin()){
-                            System.out.println(STR."Féliciations à \{joueurs.winner().getName()} pour la victoire !");
+                        if (joueurs.checkWin()) {
+                            System.out.println(StringTemplate.STR."Féliciations à \{joueurs.winner().getName()} pour la victoire !");
                             System.out.println("Appuyez sur entrée pour retourner au menu");
                             scanner.nextLine();
                             MenuJeu();
-                        }
-                    } else {
+                            }
+                        } else {
                         System.out.println("Vous passez un tour !");
                         System.out.println("\n");
                         joueur.setNbrTour(-1);
@@ -172,14 +175,31 @@ public class InterfaceJeu {
     public void Jouer(Player joueur, Players joueurs) {
         Scanner scanner = new Scanner(System.in);
         int de = joueur.lancerDe();
+        if (joueurs.isJoueursGuerre()){
+            if (de == 6){
+                joueurs.finGuerre();
+            }else {
+                joueurs.boireGuerre();
+            }
+        }
         int newPosition = joueur.getPosition() + de;
         joueur.setPosition(newPosition);
-        System.out.println(STR."Tu es désormais sur la case \{joueur.getPosition()}");
+        System.out.println(StringTemplate.STR."Tu es désormais sur la case \{joueur.getPosition()}");
         scanner.nextLine();
-        effetCase(joueur, joueurs, newPosition);
+        if (joueur.getNbrJoker() == 0){
+            effetCase(joueur, joueurs, newPosition);
+        }else {
+            boolean jokerCheck = joueur.jokerCheck();
+            if (jokerCheck){
+                System.out.println("Vous avez utilisé votre joker ! ");
+            }else {
+                effetCase(joueur, joueurs, newPosition);
+            }
+        }
+
     }
 
-    // Il manque 39, 47, 57
+
     public void effetCase(Player joueur, Players joueurs, int newPosition){
         Scanner scanner = new Scanner(System.in);
         switch (newPosition) {
@@ -326,7 +346,7 @@ public class InterfaceJeu {
                 int tempPos = joueur.getPosition();
                 int tempMulti = joueur.getMultiplicateur();
                 int tempJoker = joueur.getNbrJoker();
-                Player tempPlay = joueurs.choixJoueur();
+                Player tempPlay = joueurs.choixSpecificPlayer(joueur);
                 joueur.setPosition(tempPlay.getPosition());
                 joueur.setNbrJoker(tempPlay.getNbrJoker());
                 joueur.setMultiplicateur(tempPlay.getMultiplicateur());
@@ -338,7 +358,7 @@ public class InterfaceJeu {
                 joueur.ajoutGorgee(1);break;
             case 34:
                 System.out.println("3/4 Cuir : Fusillade !!! Choisis un bouclier humain. Le joueur de ton choix se fait descendre et retournes sur la case départ. PS : Fouilles-le, voir si il a pas un joker");
-                Player temp = joueurs.choixJoueur();
+                Player temp = joueurs.choixSpecificPlayer(joueur);
                 if (temp.getNbrJoker() > 0){
                     joueur.ajoutJoker(temp.getNbrJoker());
                 }
@@ -354,7 +374,8 @@ public class InterfaceJeu {
             case 38:
                 System.out.println("Amandine du 38 : Chante quelque phases du son de ton choix.");break;
             case 39:
-                System.out.println("Début de la guerre 39-45 : FLEMME");break;
+                System.out.println("Début de la guerre 39-45 : Attends qu'un joueur fasse un 6 pour que la guerre se finisse et que tu ailles sur la case 45 sinon bois une gorgée à chaque défaite, c'est-à-dire à chaque fois que quelqu'un lance le dé.");
+                joueur.setGuerre(true);break;
             case 40:
                 System.out.println("Ali baba et les 40 voleurs : Si un des joueurs a un joker tu peux le lui voler... Sinon tant pis pour toi, bois 2 gorgéess.");
                 if (joueurs.isJokerSauf(joueur)){
@@ -365,12 +386,12 @@ public class InterfaceJeu {
                         for (int i = 0; i < playerWithJoker.size();i++){
                             Player pTemp = playerWithJoker.get(i);
                             int ind = i+1;
-                            System.out.println(STR."\{ind} - \{pTemp.getName()}");
+                            System.out.println(StringTemplate.STR."\{ind} - \{pTemp.getName()}");
                         }
                         int choix = scanner.nextInt()-1;
                         if (choix<playerWithJoker.size() || choix>0){
                             Player joueurVole = playerWithJoker.get(choix);
-                            System.out.println(STR."Tu as choisi \{joueurVole.getName()}");
+                            System.out.println(StringTemplate.STR."Tu as choisi \{joueurVole.getName()}");
                             int nbrVol = joueurVole.getNbrJoker();
                             joueurVole.setNbrJoker(0);
                             joueur.ajoutJoker(nbrVol);
@@ -402,6 +423,10 @@ public class InterfaceJeu {
                 joueurs.case46();break;
             case 47:
                 System.out.println("AK-47 : Tire dans l'tas. Chacun de tes adversaires choisit un chiffre de 1 à 6(ils peuvent choisir le même). Lance le dé, si le chiffre d'un des joueurs sort, tu l'éxecute et il devra retourner à la case départ. Sinon va en G.A.V case 48");
+                if (!joueurs.ak47(joueur)){
+                    joueur.setPosition(48);
+                    effetCase(joueur, joueurs, 48);
+                }
                 break;
             case 48:
                 System.out.println("48 heures de G.A.V : La garde à vue s'éternise... Passe 2 tours. Si tu as un joker tu le perds à la fouille.");
@@ -440,7 +465,7 @@ public class InterfaceJeu {
                 joueur.ajoutGorgee(3);break;
             case 57:
                 System.out.println("3-5-7 Magnum : Roulette Russe... Tous les joueurs lancent le dé, le 1er à faire 1 s'en prend une en pleine tête, et retournes à la case départ");
-                break;
+                joueurs.magnum357().mortJoueur();break;
             case 58:
                 System.out.println("58 Minutes pour vivre : Tu es invincible comme John Mac Clane. Tu gagnes un joker");
                 joueur.ajoutJoker(1);break;

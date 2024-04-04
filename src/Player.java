@@ -9,6 +9,7 @@ public class Player {
     private int nbrSec;
     private int nbrJoker;
     private int multiplicateur;
+    private boolean guerre;
     public Player(){
         position = 0;
         nbrTour = 0;
@@ -16,6 +17,7 @@ public class Player {
         nbrSec = 0;
         nbrJoker = 0;
         multiplicateur = 1;
+        guerre = false;
     }
     public Player(String newName, int newMultiplicateur){
         this.name = newName;
@@ -108,8 +110,30 @@ public class Player {
         scanner.nextLine();
         return de;
     }
+    public int choixDe(){
+        Scanner scanner = new Scanner(System.in);
+        int result = 0;
+        int isAnswer = 0;
+        while (isAnswer == 0){
+            System.out.println("Chosissez un chiffre entre 1 et 6");
+            int choix = scanner.nextInt();
+            if (choix > 0 || choix < 6){
+                result = choix;
+                isAnswer++;
+            }
+        }
+        return result;
+    }
     @Override
     public String toString() {
         return STR."\{name} {, position=\{position}, nbrTour=\{nbrTour}, nbrGorgee=\{nbrGorgee}, nbrSec=\{nbrSec}, nbrJoker=\{nbrJoker}, multiplicateur=\{multiplicateur}\{'}'}";
+    }
+
+    public boolean isGuerre() {
+        return guerre;
+    }
+
+    public void setGuerre(boolean guerre) {
+        this.guerre = guerre;
     }
 }
