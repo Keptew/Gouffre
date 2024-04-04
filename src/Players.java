@@ -33,6 +33,18 @@ public class Players {
     public Player getPlayerFromInt(int index){
         return this.playerList.get(index);
     }
+    public List<Player> getPlayerList(){return this.playerList;}
+    public int getPlayerIndex(Player player){
+        int IndReturn = 0;
+        int i = 0;
+        for(Player p : playerList){
+            if(player == p){
+                IndReturn = i;
+            }
+            i++;
+        }
+        return IndReturn;
+    }
     public int getSize(){
         return this.playerList.size();
     }
@@ -41,50 +53,147 @@ public class Players {
             j.ajoutGorgee(nbrGorgee);
         }
     }
-    public Player vieChat(){
-        List<Integer> resultatDe = new ArrayList<>(this.playerList.size());
-        Players doublonsPotentiels = new Players();
-        for (Player p : this.playerList){
-            resultatDe.add(p.lancerDe());
+    public void gorgeeGeneraleSauf(int nbrGorgee, Player player){
+        for (Player j : this.playerList){
+            if (j != player){
+                j.ajoutGorgee(nbrGorgee);
+            }
         }
-        return getPlayer(resultatDe, doublonsPotentiels);
     }
-    private Player getPlayer(List<Integer> resultatDe, Players doublonsPotentiels) {
-        Player pReturn;
-        int IDLowest = 0;
-        int lowestValue = resultatDe.getFirst();
-        for (int i = 1; i < resultatDe.size(); i++) {
-            if (resultatDe.get(i) < lowestValue) {
-                lowestValue = resultatDe.get(i);
-                IDLowest = i;
+    public void case43(Player player){
+        for (Player j : this.playerList){
+            if (j != player){
+                j.ajoutGorgee(j.lancerDe());
             }
         }
-        resultatDe.remove(IDLowest);
-        doublonsPotentiels.ajPlayer(this.playerList.get(IDLowest));
-        int ind = 0;
-        for (Integer i : resultatDe){
-            if(i == lowestValue){
-                doublonsPotentiels.ajPlayer(this.playerList.get(resultatDe.get(ind+1)));
+    }
+    public void case46(){
+        for (Player j : this.playerList){
+            int resultat = j.lancerDe();
+            if (resultat != 2 && resultat != 4 && resultat != 6){
+                j.ajoutGorgee(2);
             }
-            ind++;
         }
-        if(doublonsPotentiels.getSize()>1){
-            pReturn = departagerJoueurs(doublonsPotentiels);
-        } else {
-            pReturn = doublonsPotentiels.getPlayerFromInt(0);
+    }
+    public Player vieChat(List<Player> playerList1) {
+        Player pReturn = null;
+        int nbrJoueurs = playerList1.size();
+        Map<Player, Integer> resultatsDe = new HashMap<>();
+        for(Player p : playerList1){
+            resultatsDe.put(p, p.lancerDe());
+        }
+        int minValue = resultatsDe.get(getPlayerFromInt(0));
+        List<Player> listDoublons = new ArrayList<>();
+        boolean isDoublons = false;
+        for (int resultat : resultatsDe.values()){
+            if (resultat < minValue){
+                minValue = resultat;
+                listDoublons.clear();
+                isDoublons = false;
+            }else if(resultat == minValue){
+                isDoublons = true;
+                listDoublons = getPlayerFromResultatDe(resultatsDe, resultat);
+            }
+        }
+        if (isDoublons){
+            vieChat(listDoublons);
+        }else {
+            pReturn = getPlayerFromResultatDe(resultatsDe, minValue).getFirst();
+        }
+        System.out.println(STR."C'est le joueur \{Objects.requireNonNull(pReturn).getName()} qui a perdu !");
+        return pReturn;
+    }
+    public static List<Player> getPlayerFromResultatDe(Map<Player, Integer> map, int targetValue) {
+        List<Player> joueurs = new ArrayList<>();
+        for (Map.Entry<Player, Integer> entry : map.entrySet()) {
+            if (entry.getValue().equals(targetValue)) {
+                joueurs.add(entry.getKey());
+            }
+        }
+
+        return joueurs;
+    }
+    public List<Player> getPlayerWithJokerSauf(Player player){
+        List<Player> playerWithJoker = new ArrayList<>();
+        for (Player p : playerList){
+            if (p != player && p.getNbrJoker() > 0){
+                playerWithJoker.add(p);
+            }
+        }
+        return playerWithJoker;
+    }
+    public boolean isJokerSauf(Player player){
+        boolean isJoker = false;
+        for (Player p : playerList){
+            if (p != player){
+                if (p.getNbrJoker() != 0){
+                    isJoker = true;
+                }
+            }
+        }
+        return isJoker;
+    }
+    public Player choixPerdant(){
+        Player pReturn = null;
+        int isAnswer = 0;
+        while(isAnswer == 0) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Quel Joueur a perdu ?");
+            int i = 1;
+            for (Player p : this.playerList){
+                System.out.println(STR."\{i} - \{p.getName()}");
+                i++;
+            }
+            int choix = s.nextInt()-1;
+            if(choix<this.playerList.size()){
+                System.out.println(STR."Tu as choisi \{this.playerList.get(choix).getName()}");
+                isAnswer++;
+                pReturn = this.playerList.get(choix);
+            }
         }
         return pReturn;
     }
-    public Player departagerJoueurs(Players joueurs){
-        List<Integer> resultatDe = new ArrayList<>(this.playerList.size());
-        Players doublonsPotentiels = new Players();
-        for (int i = 0; i<joueurs.getSize();i++){
-            Player temp = joueurs.getPlayerFromInt(i);
-            resultatDe.add(temp.lancerDe());
+    public Player choixGagnant(){
+        Player pReturn = null;
+        int isAnswer = 0;
+        while(isAnswer == 0) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Quel Joueur a gagné(gros) ?");
+            int i = 1;
+            for (Player p : this.playerList){
+                System.out.println(STR."\{i} - \{p.getName()}");
+                i++;
+            }
+            int choix = s.nextInt()-1;
+            if(choix<this.playerList.size()){
+                System.out.println(STR."Tu as choisi \{this.playerList.get(choix).getName()}");
+                isAnswer++;
+                pReturn = this.playerList.get(choix);
+            }
         }
-        return getPlayer(resultatDe, doublonsPotentiels);
+        return pReturn;
     }
-    public Player choixPlayer(){
+    public Player choixJoueur(){
+        Player pReturn = null;
+        int isAnswer = 0;
+        while(isAnswer == 0) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Quel Joueur choisis-tu ?");
+            int i = 1;
+            for (Player p : this.playerList){
+                System.out.println(STR."\{i} - \{p.getName()}");
+                i++;
+            }
+            int choix = s.nextInt()-1;
+            if(choix<this.playerList.size()){
+                System.out.println(STR."Tu as choisi \{this.playerList.get(choix).getName()}");
+                isAnswer++;
+                pReturn = this.playerList.get(choix);
+            }
+        }
+        return pReturn;
+    }
+    public Player choixSpecificPlayer(Player player1){
         Player pReturn = null;
         int isAnswer = 0;
         while(isAnswer == 0) {
@@ -92,12 +201,14 @@ public class Players {
             System.out.println("Quel Joueur choisi-Tu ?");
             int i = 1;
             for (Player p : this.playerList){
-                System.out.println(i+" - "+p.getName());
+                if(p != player1) {
+                    System.out.println(STR."\{i} - \{p.getName()}");
+                }
                 i++;
             }
             int choix = s.nextInt()-1;
             if(choix<this.playerList.size()){
-                System.out.println("Tu as choisi "+this.playerList.get(choix).getName());
+                System.out.println(STR."Tu as choisi \{this.playerList.get(choix).getName()}");
                 isAnswer++;
                 pReturn = this.playerList.get(choix);
             }
@@ -120,6 +231,20 @@ public class Players {
             }
         }
         return pReturn;
+    }
+    public Player joueurDevantPlusProche(Player player){
+        Player playerPlusProche = player;
+        int diffMin = playerList.size();
+        for (Player p : this.playerList){
+            if(p.getPosition() > player.getPosition()){
+                int diff = p.getPosition() - player.getPosition();
+                if(diff < diffMin){
+                    diffMin = diff;
+                    playerPlusProche = p;
+                }
+            }
+        }
+        return playerPlusProche;
     }
     public boolean checkWin(){
         boolean isWin = false;

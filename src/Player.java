@@ -37,7 +37,7 @@ public class Player {
         return nbrTour;
     }
     public void setNbrTour(int nbrTour) {
-        this.nbrTour = nbrTour;
+        this.nbrTour += nbrTour;
     }
     public int getNbrGorgee() {
         return nbrGorgee;
@@ -101,22 +101,15 @@ public class Player {
     public int lancerDe(){
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
-        System.out.println("Appuyez sur Entrée pour lancer le dé...");
+        System.out.println(STR."\{this.name.toUpperCase()}, appuie sur Entrée pour lancer le dé...");
         scanner.nextLine();
         int de = random.nextInt(6) + 1;
-        System.out.println("Vous avez obtenu un " + de);
+        System.out.println(STR."Vous avez obtenu un \{de}");
         scanner.nextLine();
         return de;
     }
     @Override
     public String toString() {
-        return name+" {" +
-                ", position=" + position +
-                ", nbrTour=" + nbrTour +
-                ", nbrGorgee=" + nbrGorgee +
-                ", nbrSec=" + nbrSec +
-                ", nbrJoker=" + nbrJoker +
-                ", multiplicateur=" + multiplicateur +
-                '}';
+        return STR."\{name} {, position=\{position}, nbrTour=\{nbrTour}, nbrGorgee=\{nbrGorgee}, nbrSec=\{nbrSec}, nbrJoker=\{nbrJoker}, multiplicateur=\{multiplicateur}\{'}'}";
     }
 }
