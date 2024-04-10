@@ -104,10 +104,9 @@ public class Player {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
         System.out.println(STR."\{this.name.toUpperCase()}, appuie sur Entrée pour lancer le dé...");
+        int de = random.nextInt(2) + 1;
         scanner.nextLine();
-        int de = random.nextInt(6) + 1;
         System.out.println(STR."Vous avez obtenu un \{de}");
-        scanner.nextLine();
         return de;
     }
     public int choixDe(){

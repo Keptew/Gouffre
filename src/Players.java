@@ -36,12 +36,10 @@ public class Players {
     public List<Player> getPlayerList(){return this.playerList;}
     public int getPlayerIndex(Player player){
         int IndReturn = 0;
-        int i = 0;
-        for(Player p : playerList){
-            if(player == p){
+        for(int i = 0;i<playerList.size();i++){
+            if (playerList.get(i) == player){
                 IndReturn = i;
             }
-            i++;
         }
         return IndReturn;
     }
@@ -78,8 +76,9 @@ public class Players {
     public boolean isJoueursGuerre(){
         boolean isGuerre = false;
         for (Player p : this.playerList){
-            if (p.isGuerre()){
+            if (p.isGuerre()) {
                 isGuerre = true;
+                break;
             }
         }
         return isGuerre;
@@ -135,44 +134,44 @@ public class Players {
         return pReturn;
     }
 
-    public Player vieChat(List<Player> playerList1) {
+    public Player joueurPlusBasScore(List<Player> playerList1) {
         Player pReturn = null;
-        int nbrJoueurs = playerList1.size();
-        Map<Player, Integer> resultatsDe = new HashMap<>();
-        for(Player p : playerList1){
-            resultatsDe.put(p, p.lancerDe());
+        HashMap<Player, Integer> resultats = new HashMap<>();
+        for (Player p : playerList1){
+            resultats.put(p, p.lancerDe());
         }
-        int minValue = resultatsDe.get(getPlayerFromInt(0));
-        List<Player> listDoublons = new ArrayList<>();
         boolean isDoublons = false;
-        for (int resultat : resultatsDe.values()){
-            if (resultat < minValue){
-                minValue = resultat;
-                listDoublons.clear();
+        int lowerValue = 7;
+        for (Player p : resultats.keySet()){
+            int resultat = resultats.get(p);
+            if (resultat < lowerValue){
+                lowerValue = resultat;
+                pReturn = p;
                 isDoublons = false;
-            }else if(resultat == minValue){
+            } else if (resultat == lowerValue) {
                 isDoublons = true;
-                listDoublons = getPlayerFromResultatDe(resultatsDe, resultat);
             }
         }
         if (isDoublons){
-            vieChat(listDoublons);
+            HashMap<Player, Integer> doublons = getDoublons(resultats, lowerValue);
+            List<Player> listDoublons = new ArrayList<>(doublons.keySet());
+            joueurPlusBasScore(listDoublons);
         }else {
-            pReturn = getPlayerFromResultatDe(resultatsDe, minValue).getFirst();
+            System.out.println("C'est le joueur "+pReturn.getName()+" qui a perdu !");
         }
-        System.out.println(STR."C'est le joueur \{Objects.requireNonNull(pReturn).getName()} qui a perdu !");
         return pReturn;
     }
-    public static List<Player> getPlayerFromResultatDe(Map<Player, Integer> map, int targetValue) {
-        List<Player> joueurs = new ArrayList<>();
-        for (Map.Entry<Player, Integer> entry : map.entrySet()) {
-            if (entry.getValue().equals(targetValue)) {
-                joueurs.add(entry.getKey());
+    public HashMap<Player, Integer> getDoublons(HashMap<Player, Integer> liste, int lowerValue){
+        HashMap<Player, Integer> doublons = new HashMap<>();
+        for (Player p : liste.keySet()){
+            int resultat = liste.get(p);
+            if (resultat == lowerValue){
+                doublons.put(p, resultat);
             }
         }
-
-        return joueurs;
+        return doublons;
     }
+
     public List<Player> getPlayerWithJokerSauf(Player player){
         List<Player> playerWithJoker = new ArrayList<>();
         for (Player p : playerList){

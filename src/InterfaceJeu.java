@@ -108,7 +108,7 @@ public class InterfaceJeu {
             } while (!joueurs.checkWin());
         }
         else if (sensPlateau.equals("antihoraire")){
-            for (int i = playerStart; i > 0; i--){
+            for (int i = playerStart; i >= 0; i--){
                 Player joueur = joueurs.getPlayerFromInt(i);
                 int nbrGorgee = joueur.getNbrGorgee();
                 int multiplicateur = joueur.getMultiplicateur();
@@ -137,7 +137,7 @@ public class InterfaceJeu {
                 }
             }
             do {
-                for (int i = joueurs.getSize(); i > 0; i--){
+                for (int i = joueurs.getSize()-1; i >= 0; i--){
                     Player joueur = joueurs.getPlayerFromInt(i);
                     int nbrGorgee = joueur.getNbrGorgee();
                     int multiplicateur = joueur.getMultiplicateur();
@@ -185,7 +185,6 @@ public class InterfaceJeu {
         int newPosition = joueur.getPosition() + de;
         joueur.setPosition(newPosition);
         System.out.println(StringTemplate.STR."Tu es désormais sur la case \{joueur.getPosition()}");
-        scanner.nextLine();
         if (joueur.getNbrJoker() == 0){
             effetCase(joueur, joueurs, newPosition);
         }else {
@@ -238,7 +237,7 @@ public class InterfaceJeu {
                 joueur.ajoutGorgee(2);scanner.nextLine();break;
             case 9:
                 System.out.println("Les 9 vies d'un chat : Chaque joueur lance le dé. Le plus petit score se fait écraser et retourne sur la case départ. Si tu avais un joker, dit lui adieu");
-                joueurs.vieChat(joueurs.getPlayerList()).mortJoueur();scanner.nextLine();break;
+                joueurs.joueurPlusBasScore(joueurs.getPlayerList()).mortJoueur();scanner.nextLine();break;
 
             case 10:
                 System.out.println("Une de perdue, 10 de retrouvées. T'as misé sur le mauvais cheval. Bois 2 gorgées et rejoue");
@@ -290,7 +289,7 @@ public class InterfaceJeu {
                 break;
             case 22:
                 System.out.println("22 V'là les flics : Course poursuite !!! Tous les joueurs lancent le dé, le plus petit score se fait péter et finit en G.A.V case 17.");
-                Player perdant = joueurs.vieChat(joueurs.getPlayerList());
+                Player perdant = joueurs.joueurPlusBasScore(joueurs.getPlayerList());
                 perdant.setPosition(17);
                 effetCase(perdant, joueurs, 17);break;
             case 23:
